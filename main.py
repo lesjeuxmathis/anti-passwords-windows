@@ -4,6 +4,30 @@ import os
 import subprocess
 import ctypes
 from tkinter import simpledialog, messagebox
+import os
+import sys
+import ctypes
+
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+def run_as_admin():
+    if is_admin():
+        # Vous avez déjà des privilèges administratifs ici
+        pass
+    else:
+        # Redémarre ce script avec des privilèges administratifs
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+
+if __name__ == '__main__':
+    run_as_admin()
+    
+    # Votre code à exécuter avec des privilèges administratifs va ici
+    # Par exemple, vous pouvez ajouter :
+    # os.system("netsh interface set interface name='Local Area Connection' admin=enable")
 
 def is_admin():
     try:
